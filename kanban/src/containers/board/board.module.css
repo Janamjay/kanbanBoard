@@ -1,0 +1,67 @@
+.main_board {
+  min-width: 290px;
+  max-height: 100%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.input{
+  border-radius: 3px;
+  outline: none;
+  border: 1px solid #1379ec;
+  padding: 10px;
+  font-size: 1rem;
+}
+.board_top {
+  display: flex;
+  margin-top: 1rem;
+}
+.top_more{
+  position: relative;
+}
+.top_more svg{  
+  cursor: pointer;
+  color: #6e9450;
+
+}
+.board_top_tittle {
+  font-size: 1.5rem;
+  line-height: 1.8rem;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  font-weight: 700;
+  color: #BFCCB5;
+}
+.board_top_tittle span {
+  color: #72905b;
+}
+
+.board_cards {
+  display: flex;
+  flex: 1;
+  height: 100%;
+  background-color: #AFD3E2;
+  border-radius: 14px;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  border-bottom: 10px;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+}
+.board_cards::-webkit-scrollbar {
+  display: none;
+}
+.dropdown{
+  background-color: transparent;
+  width: 100px;
+  padding: 0px 10px;
+  border-radius: 5px;
+  box-shadow: 1px 0px 20px rgba(0,0,0,0.1);
+}
+.dropdown p{
+  color: red;
+  cursor: pointer;
+}
