@@ -17,6 +17,7 @@ function Home() {
       setGlobalListData(JSON.parse(storedData));
     }
   }, [setGlobalListData]);
+
   function handleAddList(inputValue) {
     let Id = uuid();
 

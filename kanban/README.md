@@ -53,8 +53,8 @@ Responsive design for optimal viewing on different devices.
 
 Technologies Used:-
 React JS: A JavaScript library for building user interfaces.
-Redux: A predictable state container for managing application state.
-react-dnd: A React library for implementing drag and drop functionality.
+Recoil: A predictable state container for managing application state.
+react-beautiful-dnd: A React library for implementing drag and drop functionality.
 Material-UI (MUI): A popular React UI framework for creating beautiful and responsive UI components.
 
 
