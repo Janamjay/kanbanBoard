@@ -5,7 +5,7 @@ import { RxCross2 } from "react-icons/rx";
 import Icons from "../../components/icons/Icons";
 import Activity from "../../components/activity/Activity";
 import Description from "../../components/description/Description";
-import { useNavigate} from "react-router";
+import { useNavigate } from "react-router";
 
 function Details() {
   const [input, setInput] = useState("hii");

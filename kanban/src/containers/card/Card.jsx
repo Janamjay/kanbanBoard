@@ -5,7 +5,7 @@ import Dropdown from "../../components/dropdown/Dropdown";
 import cardStyles from "./card.module.css";
 import { Link } from "react-router-dom";
 
-const Card = ({ card, handleDeleteTask,cardArray}) => {
+const Card = ({ card, handleDeleteTask, cardArray }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   function handleClick() {
     setShowDropdown(!showDropdown);
@@ -25,7 +25,9 @@ const Card = ({ card, handleDeleteTask,cardArray}) => {
             <Dropdown>
               <div className={cardStyles.dropdown}>
                 <p>
-                  <span onClick={() => handleDeleteTask(card.cardID,cardArray)}>
+                  <span
+                    onClick={() => handleDeleteTask(card.cardID, cardArray)}
+                  >
                     Delete card
                   </span>
                 </p>
