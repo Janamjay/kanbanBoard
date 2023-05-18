@@ -6,7 +6,7 @@ import Editable from "../../components/editable/Editable";
 import Dropdown from "../../components/dropdown/Dropdown";
 import { v4 as uuid } from "uuid";
 import { ListData } from "../../recoil/atom";
-import { Snapshot, useRecoilState } from "recoil";
+import {  useRecoilState } from "recoil";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 
 const Board = (props) => {

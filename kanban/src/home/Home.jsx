@@ -11,12 +11,12 @@ import { DragDropContext } from "react-beautiful-dnd";
 
 function Home() {
   const [globalListData, setGlobalListData] = useRecoilState(ListData);
-  // useEffect(() => {
-  //   const storedData = localStorage.getItem("board");
-  //   if (storedData) {
-  //     setGlobalListData(JSON.parse(storedData));
-  //   }
-  // }, [setGlobalListData]);
+  useEffect(() => {
+    const storedData = localStorage.getItem("board");
+    if (storedData) {
+      setGlobalListData(JSON.parse(storedData));
+    }
+  }, [setGlobalListData]);
   function handleAddList(inputValue) {
     let Id = uuid();
 
