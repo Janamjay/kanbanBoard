@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import React, { useEffect } from "react";
 import style from "./Home.module.css";
 import BoardBar from "../containers/navbars/BoardBar";
 import Board from "../containers/board/Board";
@@ -38,7 +38,7 @@ function Home() {
           <div className={style.outer_board}>
             <div className={style.inner_board}>
               {globalListData?.map((item, index) => (
-                <Board index={index} key={item.listID} board={item} />
+                <Board index={index} key={item.id} board={item} />
               ))}
               <Editable
                 text="Add list"

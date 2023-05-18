@@ -124,7 +124,7 @@ const Board = (props) => {
         {props.board?.cards?.map((item, i, arr) => (
           <Card
             cardArray={arr}
-            key={item.id}
+            key={item.cardID}
             card={item}
             boardId={props.board.id}
             handleDeleteTask={handleDeleteTask}
