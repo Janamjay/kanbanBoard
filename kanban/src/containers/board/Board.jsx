@@ -6,7 +6,8 @@ import Editable from "../../components/editable/Editable";
 import Dropdown from "../../components/dropdown/Dropdown";
 import { v4 as uuid } from "uuid";
 import { ListData } from "../../recoil/atom";
-import { useRecoilState } from "recoil";
+import { Snapshot, useRecoilState } from "recoil";
+import { Draggable, Droppable } from "react-beautiful-dnd";
 
 const Board = (props) => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -26,7 +27,7 @@ const Board = (props) => {
     // console.log(currentBoard)
     tempListData[index] = currentBoard;
     setGlobalListData(tempListData);
-    localStorage.setItem('board',JSON.stringify(tempListData));
+    localStorage.setItem("board", JSON.stringify(tempListData));
     setEditMode(false);
   }
   function handleChangeTitle(event) {
@@ -41,7 +42,7 @@ const Board = (props) => {
     let tempListData = [...globalListData];
     tempListData = tempListData.filter((ele) => ele.id !== id);
     setGlobalListData(tempListData);
-    localStorage.setItem('board',JSON.stringify(tempListData));
+    localStorage.setItem("board", JSON.stringify(tempListData));
     // console.log(globalListData);
   }
   function handleAddTask(inputValue) {
@@ -65,7 +66,7 @@ const Board = (props) => {
     };
     tempListData[index] = temporaryBoard;
     setGlobalListData(tempListData);
-    localStorage.setItem('board',JSON.stringify(tempListData));
+    localStorage.setItem("board", JSON.stringify(tempListData));
   }
 
   function handleDeleteTask(cardID, cardArray) {
@@ -83,10 +84,11 @@ const Board = (props) => {
       };
 
       setGlobalListData(tempListData);
-      localStorage.setItem('board',JSON.stringify(tempListData));
+      localStorage.setItem("board", JSON.stringify(tempListData));
       console.log(tempListData);
     }
   }
+  // console.log(props.board.id);
   return (
     <div className={board.main_board}>
       <div className={board.board_top}>
@@ -120,26 +122,44 @@ const Board = (props) => {
           )}
         </div>
       </div>
-      <div className={`${board.board_cards}  ${board.custom_scroll}`}>
-        {props.board?.cards?.map((item, i, arr) => (
-          <Card
-            cardArray={arr}
-            key={item.cardID}
-            card={item}
-            boardId={props.board.id}
-            handleDeleteTask={handleDeleteTask}
-            // removeCard={props.removeCard}
-            // dragEntered={props.dragEntered}
-            // dragEnded={props.dragEnded}
-            // updateCard={props.updateCard}
-          />
-        ))}
-        <Editable
-          text="Add a card"
-          placeholder="Enter a title for this card...."
-          onSubmit={handleAddTask}
-        />
-      </div>
+      <Droppable droppableId={props.board.id} key={props.board.id}>
+        {(provided) => {
+          return (
+            <div
+              className={`${board.board_cards}  ${board.custom_scroll}`}
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+            >
+              {props.board?.cards?.map((item, i, arr) => (
+                <Draggable draggableId={item.cardID} index={i} key={item.cardID}>
+                  {(provided) => {
+                    return (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                      >
+                        <Card
+                          cardArray={arr}
+                          key={item.cardID}
+                          card={item}
+                          boardId={props.board.id}
+                          handleDeleteTask={handleDeleteTask}
+                        />
+                      </div>
+                    );
+                  }}
+                </Draggable>
+              ))}
+              <Editable
+                text="Add a card"
+                placeholder="Enter a title for this card...."
+                onSubmit={handleAddTask}
+              />
+            </div>
+          );
+        }}
+      </Droppable>
     </div>
   );
 };
