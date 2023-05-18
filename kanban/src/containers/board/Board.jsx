@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import board from "./board.module.css";
+import board from "./Board.module.css";
 import { FiMoreHorizontal } from "react-icons/fi";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import Card from "../card/Card";
 import Editable from "../../components/editable/Editable";
 import Dropdown from "../../components/dropdown/Dropdown";
@@ -23,12 +24,12 @@ const Board = (props) => {
     let index = tempListData.findIndex((ele) => ele.id === id);
     let currentBoard = { ...tempListData[index] };
     currentBoard.boardName = listTitle;
-    // console.log(currentBoard)
     tempListData[index] = currentBoard;
     setGlobalListData(tempListData);
-    localStorage.setItem('board',JSON.stringify(tempListData));
+    localStorage.setItem("board", JSON.stringify(tempListData));
     setEditMode(false);
   }
+
   function handleChangeTitle(event) {
     setListTitle(event.target.value);
   }
@@ -41,9 +42,9 @@ const Board = (props) => {
     let tempListData = [...globalListData];
     tempListData = tempListData.filter((ele) => ele.id !== id);
     setGlobalListData(tempListData);
-    localStorage.setItem('board',JSON.stringify(tempListData));
-    // console.log(globalListData);
+    localStorage.setItem("board", JSON.stringify(tempListData));
   }
+
   function handleAddTask(inputValue) {
     const currentDate = new Date();
     const formatDate = currentDate.getDate();
@@ -65,7 +66,7 @@ const Board = (props) => {
     };
     tempListData[index] = temporaryBoard;
     setGlobalListData(tempListData);
-    localStorage.setItem('board',JSON.stringify(tempListData));
+    localStorage.setItem("board", JSON.stringify(tempListData));
   }
 
   function handleDeleteTask(cardID, cardArray) {
@@ -83,64 +84,104 @@ const Board = (props) => {
       };
 
       setGlobalListData(tempListData);
-      localStorage.setItem('board',JSON.stringify(tempListData));
-      console.log(tempListData);
+      localStorage.setItem("board", JSON.stringify(tempListData));
     }
   }
+
+  function onDragEnd(result) {
+    const { destination, source, draggableId } = result;
+
+    if (!destination) {
+      return;
+    }
+
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+
+    const tempListData = [...globalListData];
+    const boardIndex = tempListData.findIndex(
+      (board) => board.id === props.board.id
+    );
+    const board = tempListData[boardIndex];
+
+    const updatedCards = Array.from(board.cards);
+    const [removedCard] = updatedCards.splice(source.index, 1);
+    updatedCards.splice(destination.index, 0, removedCard);
+
+    tempListData[boardIndex] = {
+      ...board,
+      cards: updatedCards,
+    };
+
+    setGlobalListData(tempListData);
+    localStorage.setItem("board", JSON.stringify(tempListData));
+  }
+
   return (
-    <div className={board.main_board}>
-      <div className={board.board_top}>
-        {editMode ? (
-          <input
-            className={board.input}
-            autoFocus
-            type="text"
-            defaultValue={props.board.boardName}
-            value={listTitle}
-            onChange={handleChangeTitle}
-            onBlur={() => handleSaveTitle(props.board.id)}
-          />
-        ) : (
-          <p className={board.board_top_tittle} onClick={handleEditTitle}>
-            {props.board?.boardName}
-          </p>
-        )}
-        <div className={board.top_more}>
-          <FiMoreHorizontal onClick={handleClick} />
-          {showDropdown && (
-            <Dropdown>
-              <div className={board.dropdown}>
-                <p>
-                  <span onClick={() => handleDeleteBoard(props.board.id)}>
-                    Delete
-                  </span>
-                </p>
-              </div>
-            </Dropdown>
+    <DragDropContext onDragEnd={onDragEnd}>
+      <div className={board.main_board}>
+        <div className={board.board_top}>
+          {editMode ? (
+            <input
+              className={board.input}
+              autoFocus
+              type="text"
+              defaultValue={props.board.boardName}
+              value={listTitle}
+              onChange={handleChangeTitle}
+              onBlur={() => handleSaveTitle(props.board.id)}
+            />
+          ) : (
+            <p className={board.board_top_tittle} onClick={handleEditTitle}>
+              {props.board?.boardName}
+            </p>
           )}
+          <div className={board.top_more}>
+            <FiMoreHorizontal onClick={handleClick} />
+            {showDropdown && (
+              <Dropdown>
+                <div className={board.dropdown}>
+                  <p>
+                    <span onClick={() => handleDeleteBoard(props.board.id)}>
+                      Delete
+                    </span>
+                  </p>
+                </div>
+              </Dropdown>
+            )}
+          </div>
         </div>
-      </div>
-      <div className={`${board.board_cards}  ${board.custom_scroll}`}>
-        {props.board?.cards?.map((item, i, arr) => (
-          <Card
-            cardArray={arr}
-            key={item.cardID}
-            card={item}
-            boardId={props.board.id}
-            handleDeleteTask={handleDeleteTask}
-            // removeCard={props.removeCard}
-            // dragEntered={props.dragEntered}
-            // dragEnded={props.dragEnded}
-            // updateCard={props.updateCard}
-          />
-        ))}
+        <Droppable droppableId={props.board.id}>
+          {(provided) => (
+            <div
+              className={`${board.board_cards}  ${board.custom_scroll}`}
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
+              {props.board?.cards?.map((item, index) => (
+                <Card
+                  key={item.cardID}
+                  card={item}
+                  boardId={props.board.id}
+                  index={index}
+                  handleDeleteTask={handleDeleteTask}
+                />
+              ))}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
         <Editable
           text="Add a card"
           placeholder="Enter a title for this card...."
           onSubmit={handleAddTask}
         />
       </div>
-    </div>
+    </DragDropContext>
   );
 };
 
