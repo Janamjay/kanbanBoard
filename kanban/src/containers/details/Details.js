@@ -5,11 +5,21 @@ import { RxCross2 } from "react-icons/rx";
 import Icons from "../../components/icons/Icons";
 import Activity from "../../components/activity/Activity";
 import Description from "../../components/description/Description";
-import { useNavigate} from "react-router";
+import { useNavigate, useParams} from "react-router";
+import { useRecoilValue } from "recoil";
+import { ListData } from "../../recoil/atom";
 
 function Details() {
   const [input, setInput] = useState("hii");
   const navigate = useNavigate();
+  const {cardId, boardId}=useParams()
+  // console.log(cardId)
+
+  const allLists=useRecoilValue(ListData)
+  const [requiredList]=allLists.filter(item=>item.id==boardId)
+  const [requiredCard]=requiredList.cards.filter(card=>card.cardID==cardId)
+
+
   function handleInput(e) {
     setInput(e.target.value);
   }
@@ -35,7 +45,7 @@ function Details() {
         </div>
         <div>
           <Description />
-          <Activity />
+          <Activity cardId={cardId} boardId={boardId} cardActivityLog={requiredCard.activityLog}/>
         </div>
       </div>
     </div>

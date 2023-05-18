@@ -50,7 +50,22 @@ function Home() {
       const destinationCard = [...destinationBoard.cards];
 
       const [removedCard] = sourceCard.splice(source.index, 1);
-      destinationCard.splice(destination.index, 0, removedCard);
+
+      const currentDate = new Date();
+      const formatDate = currentDate.getDate();
+      const formatMonth = currentDate.toLocaleString("default", {month: "short",});
+      const newActivity={activity:`Team 1 moved this card from ${sourceBoard.boardName} to ${destinationBoard.boardName}`, time: `${formatMonth} ${formatDate}`}
+      const {activityLog: oldActivityLog}=removedCard
+      console.log(oldActivityLog)
+      console.log(newActivity)
+      const newActivityLog=[newActivity, ...oldActivityLog]
+      console.log(newActivityLog)
+      console.log(removedCard)
+      const updatedRemovedCard={...removedCard, activityLog: newActivityLog}
+      console.log(updatedRemovedCard)
+
+
+      destinationCard.splice(destination.index, 0, updatedRemovedCard);
       // console.log(sourceCard)
       // console.log(destinationCard)
 
