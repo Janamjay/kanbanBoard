@@ -70,7 +70,6 @@ function Home() {
     // console.log(globalListData);
   }
   function onDragEnd(result) {
-    // console.log(result)
     const { source, destination } = result;
     if (!destination) {
       return;
@@ -82,64 +81,53 @@ function Home() {
       const [destinationBoard] = globalListData.filter(
         (elem) => elem.id === destination.droppableId
       );
-      // console.log(sourceBoard)
-      // console.log(destinationBoard)
+  
       const sourceCard = [...sourceBoard.cards];
       const destinationCard = [...destinationBoard.cards];
-
+  
       const [removedCard] = sourceCard.splice(source.index, 1);
-
+  
       const currentDate = new Date();
       const formatDate = currentDate.getDate();
-      const formatMonth = currentDate.toLocaleString("default", {month: "short",});
-      const newActivity={activity:`Team 1 moved this card from ${sourceBoard.boardName} to ${destinationBoard.boardName}`, time: `${formatMonth} ${formatDate}`}
-      const {activityLog: oldActivityLog}=removedCard
-      console.log(oldActivityLog)
-      console.log(newActivity)
-      const newActivityLog=[newActivity, ...oldActivityLog]
-      console.log(newActivityLog)
-      console.log(removedCard)
-      const updatedRemovedCard={...removedCard, activityLog: newActivityLog}
-      console.log(updatedRemovedCard)
-
-
+      const formatMonth = currentDate.toLocaleString("default", { month: "short" });
+      const newActivity = { activity: `Team 1 moved this card from ${sourceBoard.boardName} to ${destinationBoard.boardName}`, time: `${formatMonth} ${formatDate}` };
+      const oldActivityLog = removedCard.activityLog || []; // Ensure oldActivityLog is iterable
+      const newActivityLog = [newActivity, ...oldActivityLog];
+      const updatedRemovedCard = { ...removedCard, activityLog: newActivityLog };
+  
       destinationCard.splice(destination.index, 0, updatedRemovedCard);
-      // console.log(sourceCard)
-      // console.log(destinationCard)
-
+  
       const updatedCards = globalListData.map((elem) => {
         if (elem.id === source.droppableId) {
-          return { ...elem, cards:sourceCard};
-        }
-        else if (elem.id === destination.droppableId) {
-          return { ...elem, cards:destinationCard};
+          return { ...elem, cards: sourceCard };
+        } else if (elem.id === destination.droppableId) {
+          return { ...elem, cards: destinationCard };
         }
         return elem;
-        
       });
-
-      setGlobalListData(updatedCards)
+  
+      setGlobalListData(updatedCards);
       localStorage.setItem("board", JSON.stringify(updatedCards));
-    }
-    else{
+    } else {
       const [sourceBoard] = globalListData.filter(
         (elem) => elem.id === source.droppableId
       );
       const sourceCard = [...sourceBoard.cards];
-
+  
       const [removedCard] = sourceCard.splice(source.index, 1);
       sourceCard.splice(destination.index, 0, removedCard);
-
+  
       const updatedCards = globalListData.map((elem) => {
         if (elem.id === source.droppableId) {
-          return { ...elem, cards:sourceCard};
+          return { ...elem, cards: sourceCard };
         }
         return elem;
-      })
-      setGlobalListData(updatedCards)
+      });
+      setGlobalListData(updatedCards);
       localStorage.setItem("board", JSON.stringify(updatedCards));
     }
   }
+  
 
 
   function changeImg() {
