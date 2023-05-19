@@ -27,13 +27,19 @@ export default function Details() {
   const handleCardClick = (task) => {
     setSelectedTask(task);
   };
+  useEffect(() => {
+    const storedData = localStorage.getItem("board");
+    if (storedData) {
+      setGlobalListData(JSON.parse(storedData));
+    }
+  }, [setGlobalListData]);
 
   useEffect(() => {
     let tempListData = [...globalListData];
     let index = tempListData.findIndex((ele) => ele.id === boardId);
     let currentBoard = { ...tempListData[index] };
     setCurrentBoard(currentBoard);
-
+    
     let tempBoard = { ...currentBoard };
     let tempCardData = tempBoard.cards || []; 
     let cardIndex = tempCardData.findIndex((ele) => ele.cardID === cardId);
@@ -41,7 +47,8 @@ export default function Details() {
     setCurrentCard(currentCard);
     data = currentCard;
   }, []);
-
+  console.log(currentBoard.boardName);
+  console.log(currentCard.cardTitle);
   function handleTitle() {
     setShowTitle(!showTitle);
   }
