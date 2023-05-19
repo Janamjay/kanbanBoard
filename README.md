@@ -1,3 +1,11 @@
+*******
+Deployed link :- https://kanbanboard-tg5u.onrender.com
+
+Github link :- https://github.com/Janamjay/kanbanBoard/edit/main
+
+********
+
+
 toDoList: {
 
     name: "ToDo"

@@ -9,13 +9,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { ListData, dialogBox } from "../../recoil/atom";
 
-
-import { Dialog, DialogContent, Backdrop ,Button} from "@mui/material";
+import { Dialog, DialogContent, Backdrop, Button } from "@mui/material";
 
 export default function Details() {
   const [isDialog, setIsDialog] = useRecoilState(dialogBox);
-   const [newTitle, setNewTitle] = useState("");
-   const[initialTitle, setInitialTitle] = useState("")
+  const [initialTitle, setInitialTitle] = useState("");
+  const [newTitle, setNewTitle] = useState("");
   const { boardId, cardId } = useParams();
   let data;
   const [showTitle, setShowTitle] = useState(true);
@@ -42,7 +41,7 @@ export default function Details() {
     let index = tempListData.findIndex((ele) => ele.id === boardId);
     let currentBoard = { ...tempListData[index] };
     setCurrentBoard(currentBoard);
-    
+
     let tempBoard = { ...currentBoard };
     let tempCardData = tempBoard.cards || [];
     let cardIndex = tempCardData.findIndex((ele) => ele.cardID === cardId);
@@ -56,6 +55,19 @@ export default function Details() {
     setShowTitle(!showTitle);
   }
 
+  useEffect(() => {
+    const tempListData = [...globalListData];
+    const index = tempListData.findIndex((ele) => ele.id === boardId);
+    const currentBoard = tempListData[index];
+    if (currentBoard && currentBoard.cards) {
+      setCurrentCard(currentBoard.cards.find((card) => card.cardID === cardId));
+      setInitialTitle(
+        currentBoard.cards.find((card) => card.cardID === cardId)?.cardTitle ||
+          ""
+      );
+    }
+  }, [globalListData, boardId, cardId]);
+
   function handleClose() {
     setIsDialog(false);
   }
@@ -67,11 +79,10 @@ export default function Details() {
   );
   const cardActivityLog = requiredCard?.activityLog || [];
 
-   const handleInput = (event) => {
+  const handleInput = (event) => {
     setNewTitle(event.target.value);
   };
-  
-  
+
   const updateTitle = () => {
     const previousData = [...globalListData];
 
@@ -94,7 +105,6 @@ export default function Details() {
     setShowTitle(!showTitle);
   };
 
-
   return (
     <>
       <Backdrop open={isDialog} onClick={handleClose} />
@@ -110,7 +120,6 @@ export default function Details() {
         }}
       >
         <DialogContent>
-
           <div className={style.titleWrapper}>
             <div className={style.laptop}>
               <FaLaptop />
@@ -170,14 +179,11 @@ export default function Details() {
             <Activity
               cardId={cardId}
               boardId={boardId}
-              cardActivityLog={requiredCard.activityLog}
+              cardActivityLog={cardActivityLog}
             />
-
           </div>
         </DialogContent>
       </Dialog>
     </>
   );
 }
-
-

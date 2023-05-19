@@ -44,7 +44,31 @@ function Activity({ cardActivityLog }) {
           </button>
         </span>
       </div>
-
+      <div className={style.detailsDiv}>
+        {details ? (
+          <>
+            <div className={style.mainActivityBox}>
+              {cardActivityLog.map((item) => (
+                <span className={style.activityImage}>
+                  <img
+                    className={style.userImages}
+                    alt="user"
+                    src=" https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png"
+                    width="40px"
+                    height="40px"
+                  />
+                  <span className={style.activityText}>
+                    <p>{item.activity}</p>
+                    <p>{item.time}</p>
+                  </span>
+                </span>
+              ))}
+            </div>
+          </>
+        ) : (
+          <></>
+        )}
+      </div>
       <div className={style.comment}>
         <span className={style.justifyImage}>
           <img
@@ -93,31 +117,7 @@ function Activity({ cardActivityLog }) {
           )}
         </span>
       </div>
-      <div className={style.detailsDiv}>
-        {details ? (
-          <>
-            <div className={style.mainActivityBox}>
-              {cardActivityLog.map((item) => (
-                <span className={style.activityImage}>
-                  <img
-                    className={style.userImages}
-                    alt="user"
-                    src=" https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png"
-                    width="40px"
-                    height="40px"
-                  />
-                  <span className={style.activityText}>
-                    <p>{item.activity}</p>
-                    <p>{item.time}</p>
-                  </span>
-                </span>
-              ))}
-            </div>
-          </>
-        ) : (
-          <></>
-        )}
-      </div>
+    
     </>
   );
 }

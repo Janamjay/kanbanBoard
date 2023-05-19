@@ -1,3 +1,10 @@
+*******
+Deployed link :- https://kanbanboard-tg5u.onrender.com
+
+Github link :- https://github.com/Janamjay/kanbanBoard/edit/main
+
+********
+
 toDoList: {
 
     name: "ToDo"
@@ -78,6 +85,7 @@ Robin Sharma
 
 
 We appreciate all contributions to this project, whether it's through bug reports, feature suggestions, or pull requests.
+
 
 
 
