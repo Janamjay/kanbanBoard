@@ -85,15 +85,18 @@
 .laptop {
   margin-right: 2%;
   padding-bottom: 3%;
-  margin-top: 15px;
+  
+  font-size: 24px;
 }
 
 .cross {
   margin-left: 1%;
   margin-top: -1%;
+  font-size: 24px;
 }
 
 .textArea input {
+  
   font-size: 24px;
   border: none;
   border-bottom: 1px solid black;
@@ -107,4 +110,15 @@
 .p {
   margin-top: 0;
   font-size: 18px;
+}
+.titleWrapper{
+
+display: flex;
+flex-direction: row;
+
+}
+.title{
+  width: 100%;
+ 
+ 
 }
