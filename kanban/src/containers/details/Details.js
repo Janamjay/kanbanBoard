@@ -5,10 +5,15 @@ import { RxCross2 } from "react-icons/rx";
 import Icons from "../../components/icons/Icons";
 import Activity from "../../components/activity/Activity";
 import Description from "../../components/description/Description";
+
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { ListData, dialogBox } from "../../recoil/atom";
 import { Dialog, DialogContent,Backdrop } from "@mui/material";
+
+import { useRecoilValue } from "recoil";
+
+
 
 function Details() {
   const [isDialog, setIsDialog] = useRecoilState(dialogBox);
@@ -21,6 +26,7 @@ function Details() {
   // const = useRecoilValue(ListData);
   const [globalListData, setGlobalListData] = useRecoilState(ListData);
   const navigate = useNavigate();
+
 
   const [selectedTask, setSelectedTask] = useState(null);
   const [currentBoard, setCurrentBoard] = useState("");
@@ -53,6 +59,18 @@ function Details() {
   // console.log(tasks.boardName);
   function handleClose(){
     setIsDialog()
+
+  const {cardId, boardId}=useParams()
+  // console.log(cardId)
+
+  const allLists=useRecoilValue(ListData)
+  const [requiredList]=allLists.filter(item=>item.id==boardId)
+  const [requiredCard]=requiredList.cards.filter(card=>card.cardID==cardId)
+
+
+  function handleInput(e) {
+    setInput(e.target.value);
+
   }
   return (
     <>
@@ -113,7 +131,7 @@ function Details() {
         </div>
         <div>
           <Description />
-          <Activity />
+          <Activity cardId={cardId} boardId={boardId} cardActivityLog={requiredCard.activityLog}/>
         </div>
       </div>
     </div>
