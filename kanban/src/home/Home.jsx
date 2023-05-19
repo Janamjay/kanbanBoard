@@ -9,12 +9,10 @@ import { useRecoilState } from "recoil";
 import { v4 as uuid } from "uuid";
 import { DragDropContext } from "react-beautiful-dnd";
 
-
-
 const data = [
   {
     image:
-    "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2400x1600/33b3ef2cfb29119c7974dcbab0a6cd47/photo-1683125554888-33d34e38ddea.jpg"
+      "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2400x1600/33b3ef2cfb29119c7974dcbab0a6cd47/photo-1683125554888-33d34e38ddea.jpg",
   },
   {
     image:
@@ -70,7 +68,6 @@ function Home() {
     // console.log(globalListData);
   }
   function onDragEnd(result) {
-    // console.log(result)
     const { source, destination } = result;
     if (!destination) {
       return;
@@ -82,8 +79,7 @@ function Home() {
       const [destinationBoard] = globalListData.filter(
         (elem) => elem.id === destination.droppableId
       );
-      // console.log(sourceBoard)
-      // console.log(destinationBoard)
+
       const sourceCard = [...sourceBoard.cards];
       const destinationCard = [...destinationBoard.cards];
 
@@ -91,37 +87,29 @@ function Home() {
 
       const currentDate = new Date();
       const formatDate = currentDate.getDate();
-      const formatMonth = currentDate.toLocaleString("default", {month: "short",});
-      const newActivity={activity:`Team 1 moved this card from ${sourceBoard.boardName} to ${destinationBoard.boardName}`, time: `${formatMonth} ${formatDate}`}
-      const {activityLog: oldActivityLog}=removedCard
-      console.log(oldActivityLog)
-      console.log(newActivity)
-      const newActivityLog=[newActivity, ...oldActivityLog]
-      console.log(newActivityLog)
-      console.log(removedCard)
-      const updatedRemovedCard={...removedCard, activityLog: newActivityLog}
-      console.log(updatedRemovedCard)
-
+      const formatMonth = currentDate.toLocaleString("default", { month: "short" });
+      const newActivity = { activity: `Team 1 moved this card from ${sourceBoard.boardName} to ${destinationBoard.boardName}`, time: `${formatMonth} ${formatDate}` };
+      const oldActivityLog = removedCard.activityLog ; 
+      const newActivityLog = [newActivity, ...oldActivityLog];
+      const updatedRemovedCard = {
+        ...removedCard,
+        activityLog: newActivityLog,
+      };
 
       destinationCard.splice(destination.index, 0, updatedRemovedCard);
-      // console.log(sourceCard)
-      // console.log(destinationCard)
 
       const updatedCards = globalListData.map((elem) => {
         if (elem.id === source.droppableId) {
-          return { ...elem, cards:sourceCard};
-        }
-        else if (elem.id === destination.droppableId) {
-          return { ...elem, cards:destinationCard};
+          return { ...elem, cards: sourceCard };
+        } else if (elem.id === destination.droppableId) {
+          return { ...elem, cards: destinationCard };
         }
         return elem;
-        
       });
 
-      setGlobalListData(updatedCards)
+      setGlobalListData(updatedCards);
       localStorage.setItem("board", JSON.stringify(updatedCards));
-    }
-    else{
+    } else {
       const [sourceBoard] = globalListData.filter(
         (elem) => elem.id === source.droppableId
       );
@@ -132,41 +120,37 @@ function Home() {
 
       const updatedCards = globalListData.map((elem) => {
         if (elem.id === source.droppableId) {
-          return { ...elem, cards:sourceCard};
+          return { ...elem, cards: sourceCard };
         }
         return elem;
-      })
-      setGlobalListData(updatedCards)
+      });
+      setGlobalListData(updatedCards);
       localStorage.setItem("board", JSON.stringify(updatedCards));
     }
   }
 
-
   function changeImg() {
-   
     setImg(img + 1);
     if (img === data.length - 1) {
       setImg(0);
     }
-   
   }
-  
+
   return (
     <>
-      <div className={style.mainLayout}
-      
-      >
-        <div className={style.image} 
-         style={{
-          backgroundImage: `url(${data[img].image})`,
-          height: "100vh",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          transition: "3s",
-        }}
+      <div className={style.mainLayout}>
+        <div
+          className={style.image}
+          style={{
+            backgroundImage: `url(${data[img].image})`,
+            height: "100vh",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            transition: "3s",
+          }}
         >
-          <BoardBar changeImg={changeImg}  />
+          <BoardBar changeImg={changeImg} />
           <div className={style.outer_board}>
             <DragDropContext onDragEnd={(result) => onDragEnd(result)}>
               <div className={style.inner_board}>

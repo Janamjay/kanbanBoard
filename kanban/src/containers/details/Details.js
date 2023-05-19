@@ -5,40 +5,52 @@ import { RxCross2 } from "react-icons/rx";
 import Icons from "../../components/icons/Icons";
 import Activity from "../../components/activity/Activity";
 import Description from "../../components/description/Description";
-
 import { useNavigate, useParams } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { ListData, dialogBox } from "../../recoil/atom";
-import { Dialog, DialogContent, Backdrop, Button } from "@mui/material";
 
-import { useRecoilValue } from "recoil";
 
-function Details() {
-  const [initialTitle, setInitialTitle] = useState("");
+import { Dialog, DialogContent, Backdrop } from "@mui/material";
 
-  const [newTitle, setNewTitle] = useState("");
-
+export default function Details() {
   const [isDialog, setIsDialog] = useRecoilState(dialogBox);
+   const [newTitle, setNewTitle] = useState("");
   const { boardId, cardId } = useParams();
+  let data;
   const [showTitle, setShowTitle] = useState(true);
+  const [input, setInput] = useState(data);
   const [globalListData, setGlobalListData] = useRecoilState(ListData);
   const navigate = useNavigate();
 
-  const [currentCard, setCurrentCard] = useState(null);
+  const [selectedTask, setSelectedTask] = useState(null);
+  const [currentBoard, setCurrentBoard] = useState("");
+  const [currentCard, setCurrentCard] = useState("");
+
+  const handleCardClick = (task) => {
+    setSelectedTask(task);
+  };
+  useEffect(() => {
+    const storedData = localStorage.getItem("board");
+    if (storedData) {
+      setGlobalListData(JSON.parse(storedData));
+    }
+  }, [setGlobalListData]);
 
   useEffect(() => {
-    const tempListData = [...globalListData];
-    const index = tempListData.findIndex((ele) => ele.id === boardId);
-    const currentBoard = tempListData[index];
-    if (currentBoard && currentBoard.cards) {
-      setCurrentCard(currentBoard.cards.find((card) => card.cardID === cardId));
-      setInitialTitle(
-        currentBoard.cards.find((card) => card.cardID === cardId)?.cardTitle ||
-          ""
-      );
-    }
-  }, [globalListData, boardId, cardId]);
-
+    let tempListData = [...globalListData];
+    let index = tempListData.findIndex((ele) => ele.id === boardId);
+    let currentBoard = { ...tempListData[index] };
+    setCurrentBoard(currentBoard);
+    
+    let tempBoard = { ...currentBoard };
+    let tempCardData = tempBoard.cards || [];
+    let cardIndex = tempCardData.findIndex((ele) => ele.cardID === cardId);
+    let currentCard = { ...tempCardData[cardIndex] };
+    setCurrentCard(currentCard);
+    data = currentCard;
+  }, []);
+  console.log(currentBoard.boardName);
+  console.log(currentCard.cardTitle);
   function handleTitle() {
     setShowTitle(!showTitle);
   }
@@ -48,16 +60,17 @@ function Details() {
   }
 
   const allLists = useRecoilValue(ListData);
-  const [requiredList] = allLists.filter((item) => item.id === boardId);
-  const [requiredCard] =
-    requiredList && requiredList.cards
-      ? requiredList.cards.filter((card) => card.cardID === cardId)
-      : [];
+  const requiredList = allLists.find((item) => item.id === boardId);
+  const requiredCard = requiredList?.cards.find(
+    (card) => card.cardID === cardId
+  );
+  const cardActivityLog = requiredCard?.activityLog || [];
 
-  const handleInput = (event) => {
+   const handleInput = (event) => {
     setNewTitle(event.target.value);
   };
-
+  
+  
   const updateTitle = () => {
     const previousData = [...globalListData];
 
@@ -80,6 +93,7 @@ function Details() {
     setShowTitle(!showTitle);
   };
 
+
   return (
     <>
       <Backdrop open={isDialog} onClick={handleClose} />
@@ -95,6 +109,7 @@ function Details() {
         }}
       >
         <DialogContent>
+
           <div className={style.titleWrapper}>
             <div className={style.laptop}>
               <FaLaptop />
@@ -156,6 +171,7 @@ function Details() {
               boardId={boardId}
               cardActivityLog={requiredCard.activityLog}
             />
+
           </div>
         </DialogContent>
       </Dialog>
@@ -163,4 +179,6 @@ function Details() {
   );
 }
 
+
 export default Details;
+

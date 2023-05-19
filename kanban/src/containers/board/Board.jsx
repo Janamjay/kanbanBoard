@@ -6,7 +6,7 @@ import Editable from "../../components/editable/Editable";
 import Dropdown from "../../components/dropdown/Dropdown";
 import { v4 as uuid } from "uuid";
 import { ListData } from "../../recoil/atom";
-import { Snapshot, useRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 
 const Board = (props) => {
@@ -56,7 +56,12 @@ const Board = (props) => {
       discription: "",
       cardTitle: inputValue,
       createdAt: `${formatDate} ${formatMonth}`,
-      activityLog:[{activity: `Team 1 added this card to ${props.board.boardName}`, time: `${formatMonth} ${formatDate}`}]
+      activityLog: [
+        {
+          activity: `Team 1 added this card to ${props.board.boardName}`,
+          time: `${formatMonth} ${formatDate}`,
+        },
+      ],
     };
     let tempListData = [...globalListData];
     let index = tempListData.findIndex((ele) => ele.id === props.board.id);
@@ -132,7 +137,11 @@ const Board = (props) => {
               {...provided.droppableProps}
             >
               {props.board?.cards?.map((item, i, arr) => (
-                <Draggable draggableId={item.cardID} index={i} key={item.cardID}>
+                <Draggable
+                  draggableId={item.cardID}
+                  index={i}
+                  key={item.cardID}
+                >
                   {(provided) => {
                     return (
                       <div
