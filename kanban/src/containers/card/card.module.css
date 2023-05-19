@@ -47,7 +47,7 @@
   align-items: center;
   color: grey;
 }
-.card_footer svg {
+.card_footer svg { 
   height: 14px;
   width: 14px;
 }

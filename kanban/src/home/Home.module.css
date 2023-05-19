@@ -27,8 +27,7 @@
   overflow-x: auto;
 }
 .inner_board {
-  padding: 20px;
-  padding-bottom: 5px;
+  padding: 20px 30px 5px; 
   height: 100%;
   width: fit-content;
   padding: 0 30px;
