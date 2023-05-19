@@ -10,11 +10,12 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { ListData, dialogBox } from "../../recoil/atom";
 
 
-import { Dialog, DialogContent, Backdrop } from "@mui/material";
+import { Dialog, DialogContent, Backdrop ,Button} from "@mui/material";
 
 export default function Details() {
   const [isDialog, setIsDialog] = useRecoilState(dialogBox);
    const [newTitle, setNewTitle] = useState("");
+   const[initialTitle, setInitialTitle] = useState("")
   const { boardId, cardId } = useParams();
   let data;
   const [showTitle, setShowTitle] = useState(true);
@@ -179,6 +180,4 @@ export default function Details() {
   );
 }
 
-
-export default Details;
 
