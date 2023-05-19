@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import style from "./Details.module.css";
 import { FaLaptop } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
@@ -6,18 +6,32 @@ import Icons from "../../components/icons/Icons";
 import Activity from "../../components/activity/Activity";
 import Description from "../../components/description/Description";
 import { useNavigate, useParams} from "react-router";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useRecoilState } from "recoil";
 import { ListData } from "../../recoil/atom";
 
 function Details() {
   const [input, setInput] = useState("hii");
   const navigate = useNavigate();
   const {cardId, boardId}=useParams()
+  const [globalListData, setGlobalListData] = useRecoilState(ListData);
   // console.log(cardId)
 
-  const allLists=useRecoilValue(ListData)
+  
+    // const storedData = localStorage.getItem("board");
+    // if (storedData) {
+    //   setGlobalListData(JSON.parse(storedData));
+    // }
+ 
+  // const allLists=useRecoilValue(ListData)
+
+  console.log("Component running")
+  const allLists=JSON.parse(localStorage.getItem("board"))
+
+  console.log(allLists)
   const [requiredList]=allLists.filter(item=>item.id==boardId)
-  const [requiredCard]=requiredList.cards.filter(card=>card.cardID==cardId)
+  console.log(requiredList)
+  const [requiredCard]=requiredList.cards?.filter(card=>card.cardID==cardId)
+  console.log(requiredCard)
 
 
   function handleInput(e) {

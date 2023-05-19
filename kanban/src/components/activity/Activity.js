@@ -102,7 +102,7 @@ function Activity({cardActivityLog}) {
             <div className={style.mainActivityBox}>
               
               
-                {cardActivityLog.map(item=><span className={style.activityImage}>
+                {cardActivityLog.map((item, index)=><span key={index} className={style.activityImage}>
                 <img
                   className={style.userImages}
                   alt="user"
