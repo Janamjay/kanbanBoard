@@ -87,14 +87,9 @@ function Home() {
 
       const currentDate = new Date();
       const formatDate = currentDate.getDate();
-      const formatMonth = currentDate.toLocaleString("default", {
-        month: "short",
-      });
-      const newActivity = {
-        activity: `Team 1 moved this card from ${sourceBoard.boardName} to ${destinationBoard.boardName}`,
-        time: `${formatMonth} ${formatDate}`,
-      };
-      const oldActivityLog = removedCard.activityLog || []; // Ensure oldActivityLog is iterable
+      const formatMonth = currentDate.toLocaleString("default", { month: "short" });
+      const newActivity = { activity: `Team 1 moved this card from ${sourceBoard.boardName} to ${destinationBoard.boardName}`, time: `${formatMonth} ${formatDate}` };
+      const oldActivityLog = removedCard.activityLog ; 
       const newActivityLog = [newActivity, ...oldActivityLog];
       const updatedRemovedCard = {
         ...removedCard,
