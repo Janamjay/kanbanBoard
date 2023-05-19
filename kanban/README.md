@@ -82,6 +82,10 @@ We appreciate all contributions to this project, whether it's through bug report
 
 
 
+Deployed link :- https://kanbanboard-tg5u.onrender.com
+
+Github link :- https://github.com/Janamjay/kanbanBoard/edit/main
+
 
 
 
