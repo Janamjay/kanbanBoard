@@ -15,7 +15,7 @@ import { useRecoilValue } from "recoil";
 
 
 
-function Details() {
+export default function Details() {
   const [isDialog, setIsDialog] = useRecoilState(dialogBox);
   const { boardId, cardId } = useParams();
   // console.log(boardId,)
@@ -59,8 +59,8 @@ function Details() {
   // console.log(tasks.boardName);
   function handleClose(){
     setIsDialog()
-
-  const {cardId, boardId}=useParams()
+  }
+  
   // console.log(cardId)
 
   const allLists=useRecoilValue(ListData)
@@ -140,5 +140,5 @@ function Details() {
     </>
    
   );
-}
-export default Details;
+            }
+
