@@ -8,10 +8,13 @@ import Description from "../../components/description/Description";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { ListData, dialogBox } from "../../recoil/atom";
+
+
 import { Dialog, DialogContent, Backdrop } from "@mui/material";
 
 export default function Details() {
   const [isDialog, setIsDialog] = useRecoilState(dialogBox);
+   const [newTitle, setNewTitle] = useState("");
   const { boardId, cardId } = useParams();
   let data;
   const [showTitle, setShowTitle] = useState(true);
@@ -63,9 +66,33 @@ export default function Details() {
   );
   const cardActivityLog = requiredCard?.activityLog || [];
 
-  function handleInput(e) {
-    setInput(e.target.value);
-  }
+   const handleInput = (event) => {
+    setNewTitle(event.target.value);
+  };
+  
+  
+  const updateTitle = () => {
+    const previousData = [...globalListData];
+
+    const updatedData = previousData.map((list, listInd) => {
+      if (list.id === boardId) {
+        const updatedCards = list.cards.map((card, cardIndex) => {
+          if (card.cardID === cardId) {
+            return { ...card, cardTitle: newTitle };
+          }
+          return card;
+        });
+        return { ...list, cards: updatedCards };
+      }
+      return list;
+    });
+
+    setGlobalListData(updatedData);
+    console.log(updatedData);
+    localStorage.setItem("board", JSON.stringify(updatedData));
+    setShowTitle(!showTitle);
+  };
+
 
   return (
     <>
@@ -82,61 +109,76 @@ export default function Details() {
         }}
       >
         <DialogContent>
-          <div className={style.main}>
-            <div className={style.windows}>
-              <div className={style.textAreaSection}>
-                <span className={style.laptop}>
-                  <Icons icon={<FaLaptop />} />
-                </span>
+
+          <div className={style.titleWrapper}>
+            <div className={style.laptop}>
+              <FaLaptop />
+            </div>
+            <div className={style.title}>
+              {showTitle ? (
+                <h3>{initialTitle}</h3>
+              ) : (
                 <span className={style.textArea}>
-                  {showTitle ? (
-                    <>
-                      <p
-                        onClick={handleTitle}
-                        style={{
-                          width: "90%",
-                          border: "none",
-                          height: "30px",
-                          backgroundColor: "white",
-                          fontSize: "20px",
-                        }}
-                      >
-                        {currentCard.cardTitle}
-                      </p>
-                    </>
-                  ) : (
-                    <>
-                      <input
-                        key={currentCard.cardID}
-                        type="text"
-                        value={input}
-                        onChange={handleInput}
-                        style={{
-                          width: "90%",
-                          border: "none",
-                          height: "30px",
-                        }}
-                      />
-                    </>
-                  )}
-                  <p className={style.p}>in list {currentBoard.boardName}</p>
+                  <input
+                    key={currentCard && currentCard.cardID}
+                    type="text"
+                    value={newTitle}
+                    onChange={handleInput}
+                    style={{ width: "90%", border: "none", height: "30px" }}
+                  />
                 </span>
-                <span className={style.cross}>
-                  <Icons icon={<RxCross2 onClick={() => navigate("/")} />} />
-                </span>
-              </div>
+              )}
               <div>
-                <Description />
-                <Activity
-                  cardId={cardId}
-                  boardId={boardId}
-                  cardActivityLog={cardActivityLog}
-                />
+                <Button
+                  variant="contained"
+                  style={{
+                    backgroundColor: "#00a82d",
+                    color: "white",
+                    height: "30px",
+                    marginRight: "5px",
+                    marginTop: "10px",
+                    fontSize: "12px",
+                  }}
+                  onClick={handleTitle}
+                >
+                  {showTitle ? "Update Title" : "Cancel"}
+                </Button>
+                {!showTitle && (
+                  <Button
+                    variant="contained"
+                    style={{
+                      backgroundColor: "#00a82d",
+                      color: "white",
+                      height: "30px",
+                      marginTop: "10px",
+                      fontSize: "12px",
+                    }}
+                    onClick={updateTitle}
+                  >
+                    Save
+                  </Button>
+                )}
               </div>
             </div>
+            <span className={style.cross}>
+              <Icons icon={<RxCross2 onClick={() => navigate("/")} />} />
+            </span>
+          </div>
+          <div>
+            <Description />
+            <Activity
+              cardId={cardId}
+              boardId={boardId}
+              cardActivityLog={requiredCard.activityLog}
+            />
+
           </div>
         </DialogContent>
       </Dialog>
     </>
   );
 }
+
+
+export default Details;
+
