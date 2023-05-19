@@ -75,7 +75,7 @@
   padding-left: 2%;
   width: 20.5rem;
   height: 40px;
-  background-color: #091E420F;
+  background-color: #091e420f;
   color: #172b4d;
   border: none;
   text-align: left;
@@ -126,10 +126,10 @@
   padding-left: 15px;
 }
 
-.activityImage{
-  display:flex;
+.activityImage {
+  display: flex;
   /* border: 1px solid red; */
-  margin-top:1em;
+  margin-top: 1em;
 }
 .textEditor input {
   width: 100%;

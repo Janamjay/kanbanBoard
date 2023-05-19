@@ -5,7 +5,6 @@ import { RxCross2 } from "react-icons/rx";
 import Icons from "../../components/icons/Icons";
 import Activity from "../../components/activity/Activity";
 import Description from "../../components/description/Description";
-
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { ListData, dialogBox } from "../../recoil/atom";
@@ -35,12 +34,16 @@ export default function Details() {
     setCurrentBoard(currentBoard);
 
     let tempBoard = { ...currentBoard };
-    let tempCardData = tempBoard.cards || []; 
+    let tempCardData = tempBoard.cards || [];
     let cardIndex = tempCardData.findIndex((ele) => ele.cardID === cardId);
     let currentCard = { ...tempCardData[cardIndex] };
     setCurrentCard(currentCard);
     data = currentCard;
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem("detailData", JSON.stringify(input));
+  }, [input]);
 
   function handleTitle() {
     setShowTitle(!showTitle);
@@ -52,7 +55,9 @@ export default function Details() {
 
   const allLists = useRecoilValue(ListData);
   const requiredList = allLists.find((item) => item.id === boardId);
-  const requiredCard = requiredList?.cards.find((card) => card.cardID === cardId);
+  const requiredCard = requiredList?.cards.find(
+    (card) => card.cardID === cardId
+  );
   const cardActivityLog = requiredCard?.activityLog || [];
 
   function handleInput(e) {
@@ -102,6 +107,7 @@ export default function Details() {
                         key={currentCard.cardID}
                         type="text"
                         value={input}
+                        onChange={handleInput}
                         style={{
                           width: "90%",
                           border: "none",
@@ -113,9 +119,7 @@ export default function Details() {
                   <p className={style.p}>in list {currentBoard.boardName}</p>
                 </span>
                 <span className={style.cross}>
-                  <Icons
-                    icon={<RxCross2 onClick={() => navigate("/")} />}
-                  />
+                  <Icons icon={<RxCross2 onClick={() => navigate("/")} />} />
                 </span>
               </div>
               <div>
