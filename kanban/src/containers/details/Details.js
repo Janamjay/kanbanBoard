@@ -35,7 +35,7 @@ export default function Details() {
     setCurrentBoard(currentBoard);
 
     let tempBoard = { ...currentBoard };
-    let tempCardData = tempBoard.cards || []; // Ensure tempBoard.cards is an iterable array
+    let tempCardData = tempBoard.cards || []; 
     let cardIndex = tempCardData.findIndex((ele) => ele.cardID === cardId);
     let currentCard = { ...tempCardData[cardIndex] };
     setCurrentCard(currentCard);
