@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { GrFormClose } from "react-icons/gr";
 import { AiOutlinePlus } from "react-icons/ai";
-import edit from "./editable.module.css";
+import edit from "./Editable.module.css";
 
 const Editable = (props) => {
   const [showEdit, setShowEdit] = useState(false);

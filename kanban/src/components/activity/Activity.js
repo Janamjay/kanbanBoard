@@ -48,7 +48,8 @@ function Activity({ cardActivityLog }) {
         {details ? (
           <>
             <div className={style.mainActivityBox}>
-              {cardActivityLog.map((item, index)=><span key={index} className={style.activityImage}>
+              {cardActivityLog.map((item, index) => (
+                <span key={index} className={style.activityImage}>
                   <img
                     className={style.userImages}
                     alt="user"
@@ -61,7 +62,7 @@ function Activity({ cardActivityLog }) {
                     <p>{item.time}</p>
                   </span>
                 </span>
-              )}
+              ))}
             </div>
           </>
         ) : (
@@ -116,7 +117,6 @@ function Activity({ cardActivityLog }) {
           )}
         </span>
       </div>
-    
     </>
   );
 }

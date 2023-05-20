@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import board from "./board.module.css";
+import board from "./Board.module.css";
 import { FiMoreHorizontal } from "react-icons/fi";
 import Card from "../card/Card";
 import Editable from "../../components/editable/Editable";

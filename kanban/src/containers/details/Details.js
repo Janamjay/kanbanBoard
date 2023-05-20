@@ -7,8 +7,7 @@ import Activity from "../../components/activity/Activity";
 import Description from "../../components/description/Description";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState} from "recoil";
-import { ListData, dialogBox } from "../../recoil/atom";
-
+import { ListData, dialogBox } from "../../recoil/atom"
 import { Dialog, DialogContent, Backdrop, Button } from "@mui/material";
 
 export default function Details() {
