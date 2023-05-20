@@ -46,8 +46,28 @@ const Board = (props) => {
     // console.log(globalListData);
   }
   function handleAddTask(inputValue) {
+
+    function convertTo12HourFormat(time) {
+      const [hours, minutes] = time.split(":");
+      let period = "AM";
+
+      let hours12 = parseInt(hours, 10);
+      if (hours12 === 0) {
+        hours12 = 12;
+      } else if (hours12 === 12) {
+        period = "PM";
+      } else if (hours12 > 12) {
+        hours12 -= 12;
+        period = "PM";
+      }
+
+      return `${hours12}:${minutes} ${period}`;
+    }
     const currentDate = new Date();
     const formatDate = currentDate.getDate();
+    const currentTime = convertTo12HourFormat(
+      currentDate.getHours() + ":" + currentDate.getMinutes()
+    );
     const formatMonth = currentDate.toLocaleString("default", {
       month: "short",
     });
@@ -59,7 +79,7 @@ const Board = (props) => {
       activityLog: [
         {
           activity: `Team 1 added this card to ${props.board.boardName}`,
-          time: `${formatMonth} ${formatDate}`,
+          time: ` ${formatDate} ${formatMonth} at ${currentTime} `  ,
         },
       ],
     };

@@ -85,11 +85,35 @@ function Home() {
 
       const [removedCard] = sourceCard.splice(source.index, 1);
 
+      function convertTo12HourFormat(time) {
+        const [hours, minutes] = time.split(":");
+        let period = "AM";
+
+        let hours12 = parseInt(hours, 10);
+        if (hours12 === 0) {
+          hours12 = 12;
+        } else if (hours12 === 12) {
+          period = "PM";
+        } else if (hours12 > 12) {
+          hours12 -= 12;
+          period = "PM";
+        }
+
+        return `${hours12}:${minutes} ${period}`;
+      }
       const currentDate = new Date();
       const formatDate = currentDate.getDate();
-      const formatMonth = currentDate.toLocaleString("default", { month: "short" });
-      const newActivity = { activity: `Team 1 moved this card from ${sourceBoard.boardName} to ${destinationBoard.boardName}`, time: `${formatMonth} ${formatDate}` };
-      const oldActivityLog = removedCard.activityLog ; 
+      const currentTime = convertTo12HourFormat(
+        currentDate.getHours() + ":" + currentDate.getMinutes()
+      );
+      const formatMonth = currentDate.toLocaleString("default", {
+        month: "short",
+      });
+      const newActivity = {
+        activity: `Team 1 moved this card from ${sourceBoard.boardName} to ${destinationBoard.boardName}`,
+        time: `${formatMonth} ${formatDate} at ${currentTime} `,
+      };
+      const oldActivityLog = removedCard.activityLog;
       const newActivityLog = [newActivity, ...oldActivityLog];
       const updatedRemovedCard = {
         ...removedCard,
