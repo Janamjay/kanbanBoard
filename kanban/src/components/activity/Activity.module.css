@@ -1,5 +1,4 @@
 .main {
-  /* border: 1px solid red; */
   display: flex;
   flex-direction: row;
   margin-top: 45px;
@@ -8,19 +7,15 @@
   padding-left: 3%;
   font-size: 24px;
   font-weight: 400;
-  /* border: 1px solid blue; */
   margin-top: 12px;
 }
 .justifyImage {
   padding-left: 1%;
   font-size: 20px;
   font-weight: 400;
-  /* border: 1px solid blue; */
   margin-top: -20px;
 }
 .disc {
-  /* border: 1px solid green; */
-
   color: #172b4d;
   width: 90%;
   position: relative;
@@ -29,7 +24,6 @@
   top: 15px;
 }
 .button {
-  /* border: 1px solid red; */
   position: absolute;
   right: 0;
   top: 0;
@@ -59,7 +53,6 @@
 .comment {
   position: relative;
   top: 40px;
-  /* border: 1px solid red; */
   padding: 0;
   display: flex;
   align-items: center;
@@ -83,13 +76,11 @@
   border-radius: 3px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
   position: relative;
-
   top: 0;
   left: 0;
 }
 .textEditor {
   display: inline-block;
-  /* border: 1px solid red; */
   width: 400px;
   height: 50px;
 }
@@ -120,15 +111,11 @@
   background-color: #dcdde1;
 }
 .mainActivityBox {
-  /* border: 1px solid green; */
-  /* display: flex;
-  flex-direction: row; */
   padding-left: 15px;
 }
 
 .activityImage {
   display: flex;
-  /* border: 1px solid red; */
   margin-top: 1em;
 }
 .textEditor input {
