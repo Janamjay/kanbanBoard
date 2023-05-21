@@ -119,6 +119,7 @@ function Home() {
         ...removedCard,
         activityLog: newActivityLog,
       };
+      console.log(updatedRemovedCard)
 
       destinationCard.splice(destination.index, 0, updatedRemovedCard);
 
@@ -133,7 +134,8 @@ function Home() {
 
       setGlobalListData(updatedCards);
       localStorage.setItem("board", JSON.stringify(updatedCards));
-    } else {
+    } 
+    else {
       const [sourceBoard] = globalListData.filter(
         (elem) => elem.id === source.droppableId
       );

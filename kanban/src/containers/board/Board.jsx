@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import board from "./board.module.css";
 import { FiMoreHorizontal } from "react-icons/fi";
+import { IconContext } from "react-icons"
 import Card from "../card/Card";
 import Editable from "../../components/editable/Editable";
 import Dropdown from "../../components/dropdown/Dropdown";
@@ -82,6 +83,7 @@ const Board = (props) => {
           time: ` ${formatDate} ${formatMonth} at ${currentTime} `  ,
         },
       ],
+      comments:[]
     };
     let tempListData = [...globalListData];
     let index = tempListData.findIndex((ele) => ele.id === props.board.id);
@@ -134,7 +136,9 @@ const Board = (props) => {
           </p>
         )}
         <div className={board.top_more}>
-          <FiMoreHorizontal onClick={handleClick} />
+        <IconContext.Provider value={{ color: "white" }}>
+          <FiMoreHorizontal sx={{}} onClick={handleClick} />
+          </IconContext.Provider>
           {showDropdown && (
             <Dropdown>
               <div className={board.dropdown}>
@@ -175,6 +179,7 @@ const Board = (props) => {
                           card={item}
                           boardId={props.board.id}
                           handleDeleteTask={handleDeleteTask}
+                          
                         />
                       </div>
                     );

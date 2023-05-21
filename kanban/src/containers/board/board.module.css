@@ -68,7 +68,7 @@ body {
   display: none;
 }
 .dropdown{
-  background-color: transparent;
+  background-color: rgb(212, 212, 212);
   width: 100px;
   padding: 0px 10px;
   border-radius: 5px;
