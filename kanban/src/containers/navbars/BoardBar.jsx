@@ -2,9 +2,9 @@ import React from "react";
 import style from "./BoardBar.module.css";
 import { AiOutlineStar } from "react-icons/ai";
 function BoardBar(props) {
-
-  function handleClear(){
-    localStorage.clear()
+  function handleClear() {
+    localStorage.clear();
+    window.location.reload();
   }
 
   return (
