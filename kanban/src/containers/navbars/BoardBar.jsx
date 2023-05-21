@@ -2,10 +2,6 @@ import React from "react";
 import style from "./BoardBar.module.css";
 import { AiOutlineStar } from "react-icons/ai";
 import { AiOutlineUserAdd } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
-import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
-import { Button } from "@mui/material";
-import { BsFillImageFill } from "react-icons/bs";
 function BoardBar(props) {
   const navigate = useNavigate();
 
@@ -14,6 +10,7 @@ function BoardBar(props) {
     localStorage.removeItem("board")
     console.log("second");
   }
+
   return (
     <div className={style.navbar}>
       <div className={style.name}>
@@ -27,14 +24,6 @@ function BoardBar(props) {
           </button>
         </span>
       </div>
-
-      {/* <Button 
-               //onClick={handleImage}
-               onClick={()=>{navigate('/template')}} 
-              variant='contained' 
-              id={style.whiteBtn} 
-              startIcon={<AddPhotoAlternateIcon />}> Change Background</Button>
-      </span> */}
       <div className={style.button}>
         <img
           className={style.userImage}

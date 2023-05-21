@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import style from "./Details.module.css";
 import { FaLaptop } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
@@ -6,89 +6,47 @@ import Icons from "../../components/icons/Icons";
 import Activity from "../../components/activity/Activity";
 import Description from "../../components/description/Description";
 import { useNavigate, useParams } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState} from "recoil";
 import { ListData, dialogBox } from "../../recoil/atom";
 
 import { Dialog, DialogContent, Backdrop, Button } from "@mui/material";
 
 export default function Details() {
   const [isDialog, setIsDialog] = useRecoilState(dialogBox);
-  const [initialTitle, setInitialTitle] = useState("");
   const [newTitle, setNewTitle] = useState("");
   const { boardId, cardId } = useParams();
-  let data;
   const [showTitle, setShowTitle] = useState(true);
-  const [input, setInput] = useState(data);
   const [globalListData, setGlobalListData] = useRecoilState(ListData);
   const navigate = useNavigate();
+    console.log(globalListData);
+    console.log("Component running")
+    const allLists=JSON.parse(localStorage.getItem("board"))
+    const requiredList = allLists.find((item) => item.id === boardId);
+    const requiredCard = requiredList?.cards.find((card) => card.cardID === cardId);
 
-  const [selectedTask, setSelectedTask] = useState(null);
-  const [currentBoard, setCurrentBoard] = useState("");
-  const [currentCard, setCurrentCard] = useState("");
+    const cardActivityLog = requiredCard?.activityLog || [];
+    const initialTitle=requiredCard?.cardTitle || ""
 
-  const handleCardClick = (task) => {
-    setSelectedTask(task);
-  };
-  useEffect(() => {
-    const storedData = localStorage.getItem("board");
-    if (storedData) {
-      setGlobalListData(JSON.parse(storedData));
-    }
-  }, [setGlobalListData]);
-
-  useEffect(() => {
-    let tempListData = [...globalListData];
-    let index = tempListData.findIndex((ele) => ele.id === boardId);
-    let currentBoard = { ...tempListData[index] };
-    setCurrentBoard(currentBoard);
-
-    let tempBoard = { ...currentBoard };
-    let tempCardData = tempBoard.cards || [];
-    let cardIndex = tempCardData.findIndex((ele) => ele.cardID === cardId);
-    let currentCard = { ...tempCardData[cardIndex] };
-    setCurrentCard(currentCard);
-    data = currentCard;
-  }, []);
-  console.log(currentBoard.boardName);
-  console.log(currentCard.cardTitle);
   function handleTitle() {
-    setShowTitle(!showTitle);
-  }
-
-  useEffect(() => {
-    const tempListData = [...globalListData];
-    const index = tempListData.findIndex((ele) => ele.id === boardId);
-    const currentBoard = tempListData[index];
-    if (currentBoard && currentBoard.cards) {
-      setCurrentCard(currentBoard.cards.find((card) => card.cardID === cardId));
-      setInitialTitle(
-        currentBoard.cards.find((card) => card.cardID === cardId)?.cardTitle ||
-          ""
-      );
+    setShowTitle(!showTitle)
     }
-  }, [globalListData, boardId, cardId]);
+
 
   function handleClose() {
     setIsDialog(false);
   }
-
-  const allLists = useRecoilValue(ListData);
-  const requiredList = allLists.find((item) => item.id === boardId);
-  const requiredCard = requiredList?.cards.find(
-    (card) => card.cardID === cardId
-  );
-  const cardActivityLog = requiredCard?.activityLog || [];
 
   const handleInput = (event) => {
     setNewTitle(event.target.value);
   };
 
   const updateTitle = () => {
-    const previousData = [...globalListData];
+    const previousData = allLists;
 
-    const updatedData = previousData.map((list, listInd) => {
+
+    const updatedData = previousData.map((list) => {
       if (list.id === boardId) {
-        const updatedCards = list.cards.map((card, cardIndex) => {
+        const updatedCards = list.cards.map((card) => {
           if (card.cardID === cardId) {
             return { ...card, cardTitle: newTitle };
           }
@@ -102,7 +60,7 @@ export default function Details() {
     setGlobalListData(updatedData);
     console.log(updatedData);
     localStorage.setItem("board", JSON.stringify(updatedData));
-    setShowTitle(!showTitle);
+    setShowTitle(!showTitle)
   };
 
   return (
@@ -130,7 +88,7 @@ export default function Details() {
               ) : (
                 <span className={style.textArea}>
                   <input
-                    key={currentCard && currentCard.cardID}
+                    key={requiredCard && requiredCard.cardID}
                     type="text"
                     value={newTitle}
                     onChange={handleInput}
