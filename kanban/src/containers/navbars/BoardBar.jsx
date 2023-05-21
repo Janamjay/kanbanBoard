@@ -3,6 +3,14 @@ import style from "./BoardBar.module.css";
 import { AiOutlineStar } from "react-icons/ai";
 import { AiOutlineUserAdd } from "react-icons/ai";
 function BoardBar(props) {
+  const navigate = useNavigate();
+
+  function handleClear(){
+    console.log("first");
+    localStorage.removeItem("board")
+    console.log("second");
+  }
+
   return (
     <div className={style.navbar}>
       <div className={style.name}>
@@ -24,9 +32,9 @@ function BoardBar(props) {
           width="50px"
           height="50px"
         />
-        <button className={style.share}>
-          <AiOutlineUserAdd className={style.user} />
-          Share
+        <button onClick={handleClear} className={style.share}>
+          {/* <AiOutlineUserAdd className={style.user} /> */}
+          Clear Board
         </button>
       </div>
     </div>

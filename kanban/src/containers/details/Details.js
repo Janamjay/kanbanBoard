@@ -133,7 +133,7 @@ export default function Details() {
             </span>
           </div>
           <div>
-            <Description />
+            <Description board={boardId} cardId={cardId} />
             <Activity
               cardId={cardId}
               boardId={boardId}
