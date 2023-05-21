@@ -8,8 +8,8 @@ import "react-quill/dist/quill.snow.css";
 import { useRecoilState } from "recoil";
 import { ListData } from "../../recoil/atom";
 
-function Description({board,cardId}) {
-  const [globalListData, setGlobalListData]=useRecoilState(ListData)
+function Description({ board, cardId }) {
+  const [globalListData, setGlobalListData] = useRecoilState(ListData);
   const [editing, setEditing] = useState(false);
   const [input, setInput] = useState("");
   const [savedInput, setSavedInput] = useState("");
@@ -33,47 +33,43 @@ function Description({board,cardId}) {
     setInput(savedInput);
   }
 
- 
-useEffect(() => {
-  const savedInput = localStorage.getItem("input");
-  if (savedInput) {
-    setInput(savedInput);
-    setSavedInput(savedInput);
-  }
-}, []);
+  useEffect(() => {
+    const savedInput = localStorage.getItem("input");
+    if (savedInput) {
+      setInput(savedInput);
+      setSavedInput(savedInput);
+    }
+  }, []);
 
   function handleSave() {
     const unformattedText = input.replace(/(<([^>]+)>)/gi, "");
-  console.log(unformattedText);
-   
-    console.log(board,"board");
-    let previous=[...globalListData];
+    console.log(unformattedText);
+
+    console.log(board, "board");
+    let previous = [...globalListData];
     // console.log(previous);
-    let curtBoard=previous.map((list,ind)=>{
+    let curtBoard = previous.map((list, ind) => {
       // console.log(curtBoard);
-      if(list.id===board){
+      if (list.id === board) {
         // console.log(curtBoard,"current");
         // console.log(board);
         const updatedCards = list.cards.map((card, cardIndex) => {
-        
           if (card.cardID === cardId) {
-            
-            console.log(card.cardID,"this is the main id");
+            console.log(card.cardID, "this is the main id");
             return { ...card, discription: unformattedText };
           }
           return card;
         });
         return { ...list, cards: updatedCards };
       }
-      
+
       return list;
-    
     });
-      
+
     console.log(curtBoard);
-setGlobalListData(curtBoard)
-localStorage.setItem("board", JSON.stringify(curtBoard));
-localStorage.setItem("input", unformattedText);
+    setGlobalListData(curtBoard);
+    localStorage.setItem("board", JSON.stringify(curtBoard));
+    localStorage.setItem("input", unformattedText);
     setSavedInput(unformattedText);
     setEditing(false);
   }
@@ -83,7 +79,6 @@ localStorage.setItem("input", unformattedText);
     setEditing(false);
   }
 
-  
   return (
     <div className={style.main}>
       <span className={style.justifyIcon}>
