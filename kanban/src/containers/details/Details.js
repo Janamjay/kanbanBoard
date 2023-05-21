@@ -28,6 +28,7 @@ export default function Details() {
     const initialTitle=requiredCard?.cardTitle || ""
     const cardComments=requiredCard?.comments || []
     console.log(cardComments)
+    const cardDescription=requiredCard?.discription
 
   function handleTitle() {
     setShowTitle(!showTitle)
@@ -144,11 +145,11 @@ export default function Details() {
               </div>
             </div>
             <span className={style.cross}>
-              <Icons icon={<RxCross2 onClick={() => navigate("/")} />} />
+              <Icons icon={<RxCross2 style={{cursor: "pointer"}} onClick={() => navigate("/")} />} />
             </span>
           </div>
           <div>
-            <Description board={boardId} cardId={cardId} />
+            <Description boardId={boardId} cardId={cardId} cardDescription={cardDescription}/>
             <Activity
               cardId={cardId}
               boardId={boardId}
