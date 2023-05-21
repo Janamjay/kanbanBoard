@@ -8,7 +8,7 @@ import "react-quill/dist/quill.snow.css";
 import { useRecoilState } from "recoil";
 import { ListData } from "../../recoil/atom";
 
-function Description({ board, cardId }) {
+function Description({ boardId, cardId, cardDescription }) {
   const [globalListData, setGlobalListData] = useRecoilState(ListData);
   const [editing, setEditing] = useState(false);
   const [input, setInput] = useState("");
@@ -30,7 +30,7 @@ function Description({ board, cardId }) {
 
   function handleEdit() {
     setEditing(true);
-    setInput(savedInput);
+    // setInput(savedInput);
   }
 
   useEffect(() => {
@@ -45,14 +45,14 @@ function Description({ board, cardId }) {
     const unformattedText = input.replace(/(<([^>]+)>)/gi, "");
     console.log(unformattedText);
 
-    console.log(board, "board");
+    console.log(boardId, "board");
     let previous = [...globalListData];
     // console.log(previous);
     let curtBoard = previous.map((list, ind) => {
       // console.log(curtBoard);
-      if (list.id === board) {
+      if (list.id === boardId) {
         // console.log(curtBoard,"current");
-        // console.log(board);
+        // console.log(boardId);
         const updatedCards = list.cards.map((card, cardIndex) => {
           if (card.cardID === cardId) {
             console.log(card.cardID, "this is the main id");
@@ -75,7 +75,7 @@ function Description({ board, cardId }) {
   }
 
   function handleCancel() {
-    setInput(savedInput);
+    // setInput(savedInput);
     setEditing(false);
   }
 
@@ -93,8 +93,8 @@ function Description({ board, cardId }) {
         {editing ? (
           <div className={style.inputs} ref={inputRef}>
             <ReactQuill
-              style={{ marginTop: "1rem", backgroundColor: "white" }}
-              value={input}
+              style={{ width: "26rem", marginTop: "1rem", backgroundColor: "white" }}
+              // value={cardDescription}
               onChange={setInput}
             />
             <div className={style.buttonsSave}>
@@ -111,9 +111,9 @@ function Description({ board, cardId }) {
             <div
               onClick={handleEdit}
               className={style.savedInput}
-              dangerouslySetInnerHTML={{ __html: savedInput }}
+              dangerouslySetInnerHTML={{ __html: cardDescription }}
             />
-            {!savedInput && (
+            {!cardDescription && (
               <button onClick={() => setEditing(true)} className={style.button}>
                 Add a more detailed description...
               </button>
