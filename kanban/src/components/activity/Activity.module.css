@@ -14,6 +14,7 @@
   font-size: 20px;
   font-weight: 400;
   margin-top: -20px;
+  
 }
 .disc {
   color: #172b4d;
@@ -42,7 +43,9 @@
 }
 .userImage {
   border-radius: 50%;
-  margin-top: 30px;
+  margin-top: 0px;
+  /* border:1px solid red; */
+  
 }
 .userImages {
   border-radius: 50%;
@@ -51,11 +54,12 @@
   margin-top: 10%;
 }
 .comment {
+  /* border:1px solid; */
   position: relative;
   top: 40px;
   padding: 0;
-  display: flex;
-  align-items: center;
+  /* display: flex; */
+  /* align-items: center; */
 }
 .commentBtn {
   position: relative;
@@ -64,15 +68,21 @@
   z-index: 1;
 }
 
+.commentBox{
+  display: flex;
+  padding: 10px;
+  /* border:1px solid blue; */
+}
+
 .addComment {
   padding-left: 2%;
-  width: 20.5rem;
+  width: 26rem;
   height: 40px;
   background-color: #091e420f;
   color: #172b4d;
   border: none;
   text-align: left;
-  margin-left: 1rem;
+  /* margin-left: 1rem; */
   border-radius: 3px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
   position: relative;
@@ -81,7 +91,7 @@
 }
 .textEditor {
   display: inline-block;
-  width: 400px;
+  width: 26rem;
   height: 50px;
 }
 
@@ -111,7 +121,7 @@
   background-color: #dcdde1;
 }
 .mainActivityBox {
-  padding-left: 15px;
+  padding: 10px;
 }
 
 .activityImage {
@@ -137,3 +147,9 @@
   color: grey;
   font-size: 20px;
 }
+
+.time{
+  color: gray;
+  font-size: 12px;
+}
+

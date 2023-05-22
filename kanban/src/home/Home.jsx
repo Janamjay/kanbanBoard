@@ -14,22 +14,8 @@ const data = [
     image:
       "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2400x1600/33b3ef2cfb29119c7974dcbab0a6cd47/photo-1683125554888-33d34e38ddea.jpg",
   },
-  {
-    image:
-      "https://c4.wallpaperflare.com/wallpaper/410/867/750/vector-forest-sunset-forest-sunset-forest-wallpaper-thumb.jpg",
-  },
-  {
-    image:
-      "https://c4.wallpaperflare.com/wallpaper/878/401/154/sunrise-lake-artwork-gradient-vectors-landscape-wallpaper-thumb.jpg",
-  },
-  {
-    image:
-      "https://r4.wallpaperflare.com/wallpaper/586/603/742/minimalism-4k-for-mac-desktop-wallpaper-08165d58e0100cf8e0ec214e88e2e4aa.jpg",
-  },
-  {
-    image:
-      "https://c4.wallpaperflare.com/wallpaper/291/819/697/illustration-city-anime-painting-wallpaper-thumb.jpg",
-  },
+ 
+
   {
     image:
       "https://c4.wallpaperflare.com/wallpaper/952/536/1006/winter-4k-pc-desktop-wallpaper-thumb.jpg",
@@ -120,6 +106,7 @@ function Home() {
         ...removedCard,
         activityLog: newActivityLog,
       };
+      console.log(updatedRemovedCard)
 
       destinationCard.splice(destination.index, 0, updatedRemovedCard);
 
@@ -134,7 +121,8 @@ function Home() {
 
       setGlobalListData(updatedCards);
       localStorage.setItem("board", JSON.stringify(updatedCards));
-    } else {
+    } 
+    else {
       const [sourceBoard] = globalListData.filter(
         (elem) => elem.id === source.droppableId
       );

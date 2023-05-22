@@ -18,7 +18,7 @@ export default function Details() {
   const [showTitle, setShowTitle] = useState(true);
   const [globalListData, setGlobalListData] = useRecoilState(ListData);
   const navigate = useNavigate();
-    console.log(globalListData);
+    // console.log(globalListData);
     console.log("Component running")
     const allLists=JSON.parse(localStorage.getItem("board"))
     const requiredList = allLists.find((item) => item.id === boardId);
@@ -26,6 +26,9 @@ export default function Details() {
 
     const cardActivityLog = requiredCard?.activityLog || [];
     const initialTitle=requiredCard?.cardTitle || ""
+    const cardComments=requiredCard?.comments || []
+    console.log(cardComments)
+    const cardDescription=requiredCard?.discription
 
   function handleTitle() {
     setShowTitle(!showTitle)
@@ -42,8 +45,6 @@ export default function Details() {
 
   const updateTitle = () => {
     const previousData = allLists;
-
-
     const updatedData = previousData.map((list) => {
       if (list.id === boardId) {
         const updatedCards = list.cards.map((card) => {
@@ -58,10 +59,25 @@ export default function Details() {
     });
 
     setGlobalListData(updatedData);
-    console.log(updatedData);
+    // console.log(updatedData);
     localStorage.setItem("board", JSON.stringify(updatedData));
     setShowTitle(!showTitle)
   };
+
+  function updateComments(newComment){
+    cardComments.unshift(newComment)
+
+    const updatedData=allLists.map(list=>{if(list.id==cardId){
+      return (list.cards.map(card=>{if(card.cardID==cardId){return({...card, comments: cardComments})}
+      else return(card)}))}
+      else return(list)})
+      localStorage.setItem("board", JSON.stringify(updatedData));
+      setGlobalListData(updatedData);
+    console.log(updatedData);
+    // localStorage.setItem("board", JSON.stringify(updatedData));
+    }
+
+      
 
   return (
     <>
@@ -129,15 +145,17 @@ export default function Details() {
               </div>
             </div>
             <span className={style.cross}>
-              <Icons icon={<RxCross2 onClick={() => navigate("/")} />} />
+              <Icons icon={<RxCross2 style={{cursor: "pointer"}} onClick={() => navigate("/")} />} />
             </span>
           </div>
           <div>
-            <Description board={boardId} cardId={cardId} />
+            <Description boardId={boardId} cardId={cardId} cardDescription={cardDescription}/>
             <Activity
               cardId={cardId}
               boardId={boardId}
               cardActivityLog={cardActivityLog}
+              cardComments={cardComments}
+              updateComments={updateComments}
             />
           </div>
         </DialogContent>
