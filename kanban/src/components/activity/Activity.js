@@ -1,27 +1,20 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import style from "./Activity.module.css";
 import Icons from "../icons/Icons";
 import { RxActivityLog } from "react-icons/rx";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import {v4 as uuid} from 'uuid'
+import { v4 as uuid } from "uuid";
 
 function Activity({ cardActivityLog, updateComments, cardComments }) {
-  console.log("Activity running")
+  console.log("Activity running");
   const [details, setShowDetails] = useState(false);
   const [editing, setEditing] = useState(false);
   const [input, setInput] = useState("");
-  console.log(input)
-  const [savedInput, setSavedInput] = useState("");
-  // const inputRef = useRef();
+  console.log(input);
 
   function handleShowDetails() {
     setShowDetails(!details);
-  }
-
-  function handleEdit() {
-    setEditing(true);
-    setInput(savedInput);
   }
 
   function handleSave() {
@@ -51,22 +44,24 @@ function Activity({ cardActivityLog, updateComments, cardComments }) {
     });
 
     // const currentDate=new Date()
-    var span = document.createElement('span');
+    var span = document.createElement("span");
     span.innerHTML = input;
-    const content= span.textContent || span.innerText;
+    const content = span.textContent || span.innerText;
     // console.log(content)
-    updateComments({comment: content, time: ` ${formatDate} ${formatMonth} at ${currentTime} `, commentId: uuid()})
+    updateComments({
+      comment: content,
+      time: ` ${formatDate} ${formatMonth} at ${currentTime} `,
+      commentId: uuid(),
+    });
     // setSavedInput(input);
     setEditing(false);
-    setInput("")
+    setInput("");
   }
 
   function handleCancel() {
     // setInput(savedInput);
     setEditing(false);
   }
-
-  
 
   return (
     <>
@@ -82,11 +77,8 @@ function Activity({ cardActivityLog, updateComments, cardComments }) {
         </span>
       </div>
 
-
       <div className={style.comment}>
-        <div style={{ display:"flex", padding:"10px"}}>
-        {/* <span className={style.justifyImage}> */}
-        {/* <div> */}
+        <div style={{ display: "flex", padding: "10px" }}>
           <img
             className={style.userImage}
             src=" https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png"
@@ -94,16 +86,11 @@ function Activity({ cardActivityLog, updateComments, cardComments }) {
             width="35px"
             height="35px"
           />
-          {/* </div> */}
-        {/* </span> */}
-        <span className={style.commentBtn}>
-          {editing ? (
-            
+          <span className={style.commentBtn}>
+            {editing ? (
               <span className={style.textEditor}>
                 <ReactQuill
                   style={{ backgroundColor: "white" }}
-                  // value={input}
-                  // ref="editor"
                   onChange={setInput}
                 />
                 <div className={style.btns}>
@@ -115,51 +102,36 @@ function Activity({ cardActivityLog, updateComments, cardComments }) {
                   </button>
                 </div>
               </span>
-            
-          ) : (
-            <span>
-              {/* <div
-                onClick={handleEdit}
-                className={style.savedInput}
-                dangerouslySetInnerHTML={{ __html: savedInput }}
-              /> */}
-              {/* {!savedInput && ( */}
+            ) : (
+              <span>
                 <button
                   className={style.addComment}
                   onClick={() => setEditing(true)}
                 >
                   Write a comment....
                 </button>
-              {/* )} */}
-            </span>
-          )}
-        {/* </span> */}
-        </span>
-        </div>
-        {/* <div> */}
-          {cardComments.map(item=>
-          <div key={item.commentId} className={style.commentBox}>
-        <img
-            className={style.userImage}
-            src=" https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png"
-            alt="user"
-            width="35px"
-            height="35px"
-          />
-          <span style={{marginLeft: "10px"}}>
-          
-             <span style={{fontWeight: "bold"}}>Team 1 </span><span className={style.time}>{item.time} </span>
-            <p style={{marginTop:"6px"}}>{item.comment}</p>
-            
+              </span>
+            )}
           </span>
+        </div>
+        {cardComments.map((item) => (
+          <div key={item.commentId} className={style.commentBox}>
+            <img
+              className={style.userImage}
+              src=" https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png"
+              alt="user"
+              width="35px"
+              height="35px"
+            />
+            <span style={{ marginLeft: "10px" }}>
+              <span style={{ fontWeight: "bold" }}>Team 1 </span>
+              <span className={style.time}>{item.time} </span>
+              <p style={{ marginTop: "6px" }}>{item.comment}</p>
+            </span>
           </div>
-          )}
-        {/* </div> */}
-      {/* </div> */}
+        ))}
       </div>
 
-
-      
       <div className={style.detailsDiv}>
         {details ? (
           <>
@@ -175,7 +147,9 @@ function Activity({ cardActivityLog, updateComments, cardComments }) {
                   />
                   <span className={style.activityText}>
                     <p>{item.activity}</p>
-                    <p style={{marginTop:"6px"}} className={style.time}>{item.time}</p>
+                    <p style={{ marginTop: "6px" }} className={style.time}>
+                      {item.time}
+                    </p>
                   </span>
                 </span>
               ))}
@@ -185,8 +159,6 @@ function Activity({ cardActivityLog, updateComments, cardComments }) {
           <></>
         )}
       </div>
-      
-    
     </>
   );
 }

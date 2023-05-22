@@ -18,7 +18,7 @@ export default function Details() {
   const [showTitle, setShowTitle] = useState(true);
   const [globalListData, setGlobalListData] = useRecoilState(ListData);
   const navigate = useNavigate();
-    // console.log(globalListData);
+    console.log(globalListData);
     console.log("Component running")
     const allLists=JSON.parse(localStorage.getItem("board"))
     const requiredList = allLists.find((item) => item.id === boardId);
@@ -67,8 +67,8 @@ export default function Details() {
   function updateComments(newComment){
     cardComments.unshift(newComment)
 
-    const updatedData=allLists.map(list=>{if(list.id==cardId){
-      return (list.cards.map(card=>{if(card.cardID==cardId){return({...card, comments: cardComments})}
+    const updatedData=allLists.map(list=>{if(list.id===cardId){
+      return (list.cards.map(card=>{if(card.cardID===cardId){return({...card, comments: cardComments})}
       else return(card)}))}
       else return(list)})
       localStorage.setItem("board", JSON.stringify(updatedData));

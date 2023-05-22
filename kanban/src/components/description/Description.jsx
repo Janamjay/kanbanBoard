@@ -14,7 +14,7 @@ function Description({ boardId, cardId, cardDescription }) {
   const [input, setInput] = useState("");
   const [savedInput, setSavedInput] = useState("");
   const inputRef = useRef();
-
+  console.log(savedInput);
   useEffect(() => {
     function handleClickOutside(event) {
       if (inputRef.current && !inputRef.current.contains(event.target)) {
