@@ -68,6 +68,7 @@ function Home() {
     // console.log(globalListData);
   }
   function onDragEnd(result) {
+    // console.log(result)
     const { source, destination } = result;
     if (!destination) {
       return;
