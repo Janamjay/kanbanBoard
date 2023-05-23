@@ -9,7 +9,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState} from "recoil";
 import { ListData, dialogBox } from "../../recoil/atom";
 
+// import OutsideAlerter from "../../components/outsideAlerter/OutsideAlerter";
+
 import { Dialog, DialogContent, Backdrop, Button } from "@mui/material";
+
 
 export default function Details() {
   const [isDialog, setIsDialog] = useRecoilState(dialogBox);
@@ -18,32 +21,43 @@ export default function Details() {
   const [showTitle, setShowTitle] = useState(true);
   const [globalListData, setGlobalListData] = useRecoilState(ListData);
   const navigate = useNavigate();
-    console.log(globalListData);
     console.log("Component running")
+
+    console.log(globalListData);
     const allLists=JSON.parse(localStorage.getItem("board"))
     const requiredList = allLists.find((item) => item.id === boardId);
+    const requiredListName=requiredList?.boardName
     const requiredCard = requiredList?.cards.find((card) => card.cardID === cardId);
 
     const cardActivityLog = requiredCard?.activityLog || [];
     const initialTitle=requiredCard?.cardTitle || ""
     const cardComments=requiredCard?.comments || []
-    console.log(cardComments)
+    // console.log(cardComments)
     const cardDescription=requiredCard?.discription
 
-  function handleTitle() {
-    setShowTitle(!showTitle)
-    }
-
+  // function handleTitleClick() {
+  //   setShowTitle(!showTitle)
+  //   }
+    function handleTitle() {
+      setShowTitle(!showTitle)
+      }
+    
 
   function handleClose() {
     setIsDialog(false);
   }
 
   const handleInput = (event) => {
+    console.log(event.target.value)
     setNewTitle(event.target.value);
+    
   };
+  // console.log(newTitle)
 
-  const updateTitle = () => {
+  function updateTitle(){
+    // console.log("update title running")
+    // console.log(newTitle, "newTitle")
+
     const previousData = allLists;
     const updatedData = previousData.map((list) => {
       if (list.id === boardId) {
@@ -99,8 +113,9 @@ export default function Details() {
               <FaLaptop />
             </div>
             <div className={style.title}>
-              {showTitle ? (
+              {showTitle ? (<>
                 <h3>{initialTitle}</h3>
+                </>
               ) : (
                 <span className={style.textArea}>
                   <input
@@ -112,22 +127,23 @@ export default function Details() {
                   />
                 </span>
               )}
+              <span>in List {requiredListName}</span>
               <div>
-                <Button
-                  variant="contained"
-                  style={{
-                    backgroundColor: "#00a82d",
-                    color: "white",
-                    height: "30px",
-                    marginRight: "5px",
-                    marginTop: "10px",
-                    fontSize: "12px",
-                  }}
-                  onClick={handleTitle}
-                >
-                  {showTitle ? "Update Title" : "Cancel"}
-                </Button>
-                {!showTitle && (
+                 <Button
+                   variant="contained"
+                   style={{
+                     backgroundColor: "#00a82d",
+                     color: "white",
+                     height: "30px",
+                     marginRight: "5px",
+                     marginTop: "10px",
+                     fontSize: "12px",
+                   }}
+                   onClick={handleTitle}
+                 >
+                   {showTitle ? "Update Card Title" : "Cancel"}
+                 </Button> 
+                { !showTitle && (
                   <Button
                     variant="contained"
                     style={{
@@ -141,7 +157,7 @@ export default function Details() {
                   >
                     Save
                   </Button>
-                )}
+                )} 
               </div>
             </div>
             <span className={style.cross}>

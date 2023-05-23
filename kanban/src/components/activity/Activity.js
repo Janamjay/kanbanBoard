@@ -11,7 +11,7 @@ function Activity({ cardActivityLog, updateComments, cardComments }) {
   const [details, setShowDetails] = useState(false);
   const [editing, setEditing] = useState(false);
   const [input, setInput] = useState("");
-  console.log(input);
+  // console.log(input);
 
   function handleShowDetails() {
     setShowDetails(!details);
@@ -136,8 +136,8 @@ function Activity({ cardActivityLog, updateComments, cardComments }) {
         {details ? (
           <>
             <div className={style.mainActivityBox}>
-              {cardActivityLog.map((item) => (
-                <span className={style.activityImage}>
+              {cardActivityLog.map((item, index) => (
+                <span key={index} className={style.activityImage}>
                   <img
                     className={style.userImages}
                     alt="user"
