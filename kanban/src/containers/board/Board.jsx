@@ -126,7 +126,7 @@ const Board = (props) => {
             autoFocus
             type="text"
             defaultValue={props.board.boardName}
-            value={listTitle}
+            // value={listTitle}
             onChange={handleChangeTitle}
             onBlur={() => handleSaveTitle(props.board.id)}
           />

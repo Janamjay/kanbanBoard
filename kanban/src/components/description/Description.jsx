@@ -14,7 +14,7 @@ function Description({ boardId, cardId, cardDescription }) {
   const [input, setInput] = useState("");
   const [savedInput, setSavedInput] = useState("");
   const inputRef = useRef();
-  console.log(savedInput);
+  // console.log(savedInput);
   useEffect(() => {
     function handleClickOutside(event) {
       if (inputRef.current && !inputRef.current.contains(event.target)) {
@@ -43,9 +43,9 @@ function Description({ boardId, cardId, cardDescription }) {
 
   function handleSave() {
     const unformattedText = input.replace(/(<([^>]+)>)/gi, "");
-    console.log(unformattedText);
+    // console.log(unformattedText);
 
-    console.log(boardId, "board");
+    // console.log(boardId, "board");
     let previous = [...globalListData];
     // console.log(previous);
     let curtBoard = previous.map((list, ind) => {
@@ -55,7 +55,7 @@ function Description({ boardId, cardId, cardDescription }) {
         // console.log(boardId);
         const updatedCards = list.cards.map((card, cardIndex) => {
           if (card.cardID === cardId) {
-            console.log(card.cardID, "this is the main id");
+            // console.log(card.cardID, "this is the main id");
             return { ...card, discription: unformattedText };
           }
           return card;
@@ -66,7 +66,7 @@ function Description({ boardId, cardId, cardDescription }) {
       return list;
     });
 
-    console.log(curtBoard);
+    // console.log(curtBoard);
     setGlobalListData(curtBoard);
     localStorage.setItem("board", JSON.stringify(curtBoard));
     localStorage.setItem("input", unformattedText);

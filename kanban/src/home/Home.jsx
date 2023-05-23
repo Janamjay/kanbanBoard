@@ -3,7 +3,7 @@ import style from "./Home.module.css";
 import BoardBar from "../containers/navbars/BoardBar";
 import Board from "../containers/board/Board";
 import Editable from "../components/editable/Editable";
-import { Outlet } from "react-router-dom";
+// import { Outlet } from "react-router-dom";
 import { ListData } from "../recoil/atom";
 import { useRecoilState } from "recoil";
 import { v4 as uuid } from "uuid";
@@ -179,7 +179,7 @@ function Home() {
             </DragDropContext>
           </div>
         </div>
-        <Outlet />
+        {/* <Outlet /> */}
       </div>
     </>
   );

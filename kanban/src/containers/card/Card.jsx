@@ -3,10 +3,11 @@ import { FiMoreHorizontal } from "react-icons/fi";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import Dropdown from "../../components/dropdown/Dropdown";
 import cardStyles from "./card.module.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Card = ({ card, handleDeleteTask, cardArray, boardId }) => {
   const [showDropdown, setShowDropdown] = useState(false);
+  const location=useLocation()
   function handleClick() {
     setShowDropdown(!showDropdown);
   }
@@ -15,7 +16,9 @@ const Card = ({ card, handleDeleteTask, cardArray, boardId }) => {
       <div className={cardStyles.card_top}>
         <Link
           style={{ textDecoration: "none" }}
-          to={`/${boardId}/${card.cardID}/${card.cardTitle}`}
+          to= {`/${boardId}/${card.cardID}/${card.cardTitle}`}
+          state={{previousLocation: location}}
+          // to={{pathname: `/${boardId}/${card.cardID}/${card.cardTitle}`, state:{background:location}}}
         >
           <div className={cardStyles.card_title}>{card?.cardTitle}</div>
         </Link>
