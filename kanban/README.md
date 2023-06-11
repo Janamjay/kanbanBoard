@@ -4,7 +4,7 @@
 *******
 Deployed link :- https://kanbanboard-tg5u.onrender.com
 
-Github link :- https://github.com/Janamjay/kanbanBoard/edit/main
+Github link :- https://github.com/Janamjay/kanbanBoard/
 
 ********
 
